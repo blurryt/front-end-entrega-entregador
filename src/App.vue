@@ -1,11 +1,11 @@
-<script setup></script>
-
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <!-- <div style="display:flex; width: 100vw; height:100vh;background:#f9f9f9;">
+    <mapaAutoComplete />
+  </div> -->
+  <Orders/>
 </template>
 
-<style scoped></style>
+<script setup>
+import MapaAutoComplete from './components/mapaAutoComplete.vue';
+import Orders from './views/Orders.vue';
+</script>
