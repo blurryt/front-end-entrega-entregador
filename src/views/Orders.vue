@@ -17,8 +17,8 @@ const order = reactive({
 
 const acceptOrder = async (order_selected) => {
     order.id = order_selected._id
-    order.addressStartTrip = order_selected.addressStartTrip
-    order.addressEndTrip = order_selected.addressEndTrip
+    order.addressStartTrip = order_selected.route.addressStartTrip
+    order.addressEndTrip = order_selected.route.addressEndTrip
     order.date = order_selected.date
     order.status = order_selected.status
     order.name_user = order_selected.user.firstName + ' ' + order_selected.user.lastName
@@ -152,10 +152,10 @@ const cancel = () => {
              <span><b>Gerado em:</b> {{ order.date }}</span>
           </div>
           <div>
-            <span><b>Retirada:</b> {{ order.addressStartTrip }}</span>
+            <span><b>Retirada:</b> {{ order.route.addressStartTrip }}</span>
           </div>
           <div>
-            <span><b>Destino:</b> {{ order.addressEndTrip }}</span>
+            <span><b>Destino:</b> {{ order.route.addressEndTrip }}</span>
           </div>
           <div class="area_accept">
             <button class="accept_order" @click="acceptOrder(order)">Aceitar entrega</button>
