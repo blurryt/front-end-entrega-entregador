@@ -1,6 +1,6 @@
 <script setup>
 
-import { onMounted, computed,reactive, ref } from 'vue';
+import { onMounted, computed,reactive, ref, onUnmounted } from 'vue';
 import Sender from './Sender.vue';
 
 const orderAccepted = ref(false)
@@ -67,9 +67,16 @@ const getOrders = async () => {
     console.log(data)
 }
 
+let intervalId = null
 
 onMounted (async () => {
     getOrders();
+
+    intervalId = setInterval(getOrders, 5000)
+})
+
+onUnmounted(() => {
+  clearInterval(intervalId)
 })
 
 const cancel = () => {

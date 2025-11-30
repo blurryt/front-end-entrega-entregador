@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, onUnmounted } from 'vue'
 import { loadGoogleMaps } from '../../composables/composableMaps'
 
 const mapRef = ref(null)
@@ -40,8 +40,6 @@ const completedOrder = async () => {
   emit('getOrders')
 }
 
-
-
 let googleMapsNS, map
 let userMarker = null
 let watchId = null
@@ -51,10 +49,32 @@ let directionsRenderer = null
 let directionsRendererStart = null
 let directionsRendererDelivery = null
 
-let ignoreDirectionsCallbacks = false // fl
+let ignoreDirectionsCallbacks = false
+
+let intervalId = null
 
 // const destinationAddress = 'Parque das Nações Indígenas, Campo Grande - MS';
 // const originAdress = 'Rua Domingos Marques 1751, Campo Grande MS ';
+
+const checkOrder = async () => {
+  try {
+    const response = await fetch(`http://localhost:3000/viagens/${props.orderId}`)
+    const orderChecked = await response.json()
+
+  console.log("verificado: " + orderChecked);
+
+  if (orderChecked.status == 'active') {
+  } else {
+    alert('⚠️ Esta viagem foi cancelada!')
+     clearInterval(intervalId)
+     emit('cancel', false)
+     emit('getOrders')
+  }
+
+  } catch (err) {
+    console.error('Erro ao verificar atualizações', err)
+  }
+} 
 
 
 const destinationAddress = props.adressEnd;
@@ -91,7 +111,12 @@ onMounted(async () => {
 
   // rota dinâmica A → B (posição atual → endereço de saída)
   startTracking()
+  checkOrder();
+  intervalId = setInterval(checkOrder, 5000) 
+})
 
+onUnmounted(() => {
+  clearInterval(intervalId)
 })
 
 onBeforeUnmount(() => stopTracking())
