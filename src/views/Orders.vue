@@ -25,7 +25,7 @@ const acceptOrder = async (order_selected) => {
 
     console.log("ACEITO " + order.id)
 
-    await fetch(`http://localhost:3000/viagens/${order_selected._id}`, {
+    await fetch(`http://3.151.215.80/api/viagens/${order_selected._id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
@@ -56,7 +56,7 @@ const filteredClients = computed(() => {
 })
 
 const getOrders = async () => {
-    const response = await fetch(`http://localhost:3000/viagens?status=pending`);
+    const response = await fetch(`http://3.151.215.80/api/viagens?status=pending`);
 
     const data = await response.json();
 
