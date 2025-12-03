@@ -11,7 +11,7 @@ const emit = defineEmits(['cancel', 'getOrders']);
 const cancelOrder = async () => {
   console.log("CANCELANDO: " + props.orderId)
 
-  await fetch(`http://3.151.215.80/api/viagens/${props.orderId}`, {
+  await fetch(`https://iboxt.duckdns.org/api/viagens/${props.orderId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
@@ -26,7 +26,7 @@ const cancelOrder = async () => {
 }
 
 const completedOrder = async () => {
-  await fetch(`http://3.151.215.80/api/viagens/${props.orderId}`, {
+  await fetch(`https://iboxt.duckdns.org/api/viagens/${props.orderId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
@@ -58,7 +58,7 @@ let intervalId = null
 
 const checkOrder = async () => {
   try {
-    const response = await fetch(`http://3.151.215.80/api/viagens/${props.orderId}`)
+    const response = await fetch(`https://iboxt.duckdns.org/api/viagens/${props.orderId}`)
     const orderChecked = await response.json()
 
   console.log("verificado: " + orderChecked);
