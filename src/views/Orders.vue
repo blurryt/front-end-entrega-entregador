@@ -132,7 +132,7 @@ const cancel = () => {
   day: '2-digit',
   hour: '2-digit',
   minute: '2-digit',
-  hour12: false,
+  // hour12: false,
   timeZone: 'America/Sao_Paulo' // opcional, adicione se precisar forçar fuso
 });
 
@@ -152,11 +152,10 @@ const cancel = () => {
     
     <section class="section_orders">
         <div v-for="order in filteredClients" class="card_order">
-          <span>#{{ order._id + ' ' + order.status}}</span>
-          <h2>{{ order.user.firstName + ' ' + order.user.lastName }}</h2>
+          <span>#{{ order._id}}</span>
+          <h2 class="name_client">{{ order.user.firstName + ' ' + order.user.lastName }}</h2>
           <div>
-            <!-- <span><b>Gerado em:</b> {{ fmt.format(order.date).replace(',','') }}</span> -->
-             <span><b>Gerado em:</b> {{ order.date }}</span>
+             <span><b>Gerado em:</b> {{ new Date(order.date).toLocaleDateString("pt-BR") }}</span>
           </div>
           <div>
             <span><b>Retirada:</b> {{ order.route.addressStartTrip }}</span>
@@ -216,6 +215,10 @@ const cancel = () => {
     .area_accept {
         display: flex;
         justify-content: center;
+    }
+
+    .name_client {
+      text-transform: capitalize;
     }
 
     .accept_order {
